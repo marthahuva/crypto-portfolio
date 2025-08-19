@@ -16,6 +16,16 @@ const pool =mysql.createPool({
 })
 
 const port = 3000;
+
+// ---- CORS Handling ----
+app.use((req, res, next) => {
+    res.header('Access-Control-Allow-Origin', '*'); // Allow all origins (for development)
+    res.header('Access-Control-Allow-Methods', 'GET, POST, PUT'); // Allowed methods
+    res.header('Access-Control-Allow-Headers', 'Content-Type'); // Allowed headers
+    next();
+  });
+
+
 app.get('/', async (req, res) => {
     try{
         const [rows, fields] = await pool.query('SELECT * FROM cryptocoin')
@@ -34,7 +44,7 @@ app.get('/portafolio', async (req, res) => {
         console.log(err);
     }
 })
-
+// ----POST
 app.post('/prueba', async(req, res) =>{
     try{
         const cryptoInfo = req.body;
@@ -44,6 +54,23 @@ app.post('/prueba', async(req, res) =>{
         const values = Object.values(newCryptoInfo)
         console.log(values)
         await pool.query('INSERT INTO cryptocoin (id_Coin, Symbol, Imagen) VALUES ?', [[values]])
+        res.status(201).send('Added');
+    }catch(err){
+        res.status(400).send("ERROR!");
+    }
+
+})
+
+app.post('/addCoin/:correo', async(req, res) =>{
+    try{
+        const cryptoInfo = req.body;
+        const newCryptoInfo = {correo : 'fallon@gmail.com',
+            ...cryptoInfo}
+        console.log(newCryptoInfo)
+    
+        const values = Object.values(newCryptoInfo)
+        console.log(values)
+        await pool.query('CALL InsertarNuevaMoneda(?)', [[values]])
         res.status(201).send('Added');
     }catch(err){
         res.status(400).send("ERROR!");
