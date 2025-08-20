@@ -37,7 +37,7 @@ app.get('/', async (req, res) => {
 
 app.get('/portafolio', async (req, res) => {
     try{
-        const sqlQuery = `SELECT
+        /*const sqlQuery = `SELECT
             USCRYPT.ID_Users_CryptoCoin AS PurchaseId,
             CRYPTO.ID_CryptoCoin AS Currency,
             CRYPTO.id_Coin AS Coin,
@@ -60,11 +60,11 @@ app.get('/portafolio', async (req, res) => {
                 INNER JOIN
             users USR ON USR.ID_Users = USCRYPT.id_Users
             where USR.Email = ?;
-        `;
+        `;*/
         const {user} = req.query;
-        //const [rows, fields] = await pool.query('CALL Portafolio(?)', [user])
-        const [rows, fields] = await pool.query(sqlQuery, [user])
-        console.log({});
+        const [rows, fields] = await pool.query('CALL Portafolio(?)', [user])
+        //const [rows, fields] = await pool.query(sqlQuery, [user])
+        //console.log({});
         res.json(rows[0]);
     }catch(err){
         console.log(err);
