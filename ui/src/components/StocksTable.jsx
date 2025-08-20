@@ -23,15 +23,16 @@ export default function StocksTable({reload}) {
     try {
       const res = await axios.get("http://localhost:3000/portafolio?user=rafakitlhdez@gmail.com");
       const rows = res.data;
-      rows.forEach(
+      /*rows.forEach(
           (row) => {
               row.TotalInvested = new Decimal(row.AmountPurchased).times( new Decimal(row.PreviousQuotation));
               row.PortfolioCurrentValue = new Decimal(row.AmountPurchased).times( new Decimal( row.CurrentPrice));
               row.ProfitLoss = new Decimal(row.PortfolioCurrentValue).minus( new Decimal( row.TotalInvested));
               row.Roi = row.ProfitLoss.dividedBy(row.TotalInvested).times( new Decimal(100));
           }
-      );
+      );*/
       setRows(rows);  // Guardamos los datos en el estado
+      console.log("AAAAAAAA")
       console.log(res.data)
       setLoading(false);
     } catch (err) {
@@ -47,6 +48,7 @@ export default function StocksTable({reload}) {
       <Table sx={{ minWidth: 650 }} aria-label="portafolio table">
         <TableHead>
           <TableRow>
+            <TableCell>NUMBER</TableCell>
             <TableCell>CURRENCY</TableCell>
             <TableCell>SYMBOL</TableCell>
             <TableCell>AMOUNT PURCHASED</TableCell>
@@ -64,19 +66,19 @@ export default function StocksTable({reload}) {
         </TableHead>
         <TableBody>
           {rows.map((row) => (
-            <TableRow key={row.PurchaseId}>
-              <TableCell>{row.Coin}</TableCell>
-              <TableCell>{row.Symbol}</TableCell>
-              <TableCell>{row.AmountPurchased}</TableCell>
+            <TableRow key={row.NUMERO}>
+              <TableCell>{row.NUMERO}</TableCell>
+              <TableCell>{row.CURRENCY}</TableCell>
+              <TableCell>{row.SYMBOL}</TableCell>
+              <TableCell>{row.AMOUNT_PURCHASED}</TableCell>
               <TableCell>{row.PONDERACIONES}</TableCell>
-              <TableCell>{row.PreviousQuotation}</TableCell>
-              <TableCell>{row.Purchase_Date}</TableCell>
-              <TableCell>{row.TotalInvested.toNumber()}</TableCell>
-              <TableCell>{row.PortfolioCurrentValue.toNumber()}</TableCell>
-              <TableCell>{row.ProfitLoss.toNumber()}</TableCell>
-              <TableCell>{row.Roi.toNumber()} %</TableCell>
+              <TableCell>{row.PREVIOUS_QUOTATION}</TableCell>
+              <TableCell>{row.TOTAL_INVESTED}</TableCell>
+              <TableCell>{row.PORTAFOLIO_CURRENT_VALUE}</TableCell>
+              <TableCell>{row.PROFIT_LOSS}</TableCell>
+              <TableCell>{row.ROI}</TableCell>
               <TableCell>{row.CHANGE_24}</TableCell>
-              <TableCell>{row.CurrentPrice}</TableCell>
+              <TableCell>{row.CURRENT_PRICE}</TableCell>
               <TableCell>{row.DAILY_RETURN}</TableCell>
             </TableRow>
           ))}

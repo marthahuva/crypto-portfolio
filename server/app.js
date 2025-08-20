@@ -64,7 +64,7 @@ app.get('/portafolio', async (req, res) => {
         const {user} = req.query;
         const [rows, fields] = await pool.query('CALL Portafolio(?)', [user])
         //const [rows, fields] = await pool.query(sqlQuery, [user])
-        //console.log({});
+        console.log({});
         res.json(rows[0]);
     }catch(err){
         console.log(err);
