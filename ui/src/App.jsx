@@ -6,12 +6,16 @@ import StocksTable from './components/StocksTable.jsx'
 import AddCoin from './components/AddCoin.jsx'
 
 function App() {
-  const [count, setCount] = useState(0)
+
+  const [reload, setReload] = useState(0);
+  const forceReload = () => {
+    setReload(r => r + 1);
+  };
 
   return (
     <>
-      <StocksTable bananas={"okay"} ></StocksTable>
-      <AddCoin></AddCoin>
+      <StocksTable reload={reload} bananas={"okay"} ></StocksTable>
+      <AddCoin onCloseReload={forceReload} ></AddCoin>
     </>
   )
 }
