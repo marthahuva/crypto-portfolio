@@ -2,7 +2,7 @@ import { useState } from 'react'
 import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
 import './App.css'
-import StocksTable from './components/StocksTable.jsx'
+import EnhancedTable from './components/EnhancedTable.jsx'
 import AddCoin from './components/AddCoin.jsx'
 
 function App() {
@@ -14,7 +14,7 @@ function App() {
 
   return (
     <>
-      <StocksTable reload={reload} bananas={"okay"} ></StocksTable>
+      <EnhancedTable reload={reload} bananas={"okay"} ></EnhancedTable>
       <AddCoin onCloseReload={forceReload} ></AddCoin>
     </>
   )

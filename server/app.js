@@ -20,7 +20,7 @@ const port = 3000;
 // ---- CORS Handling ----
 app.use((req, res, next) => {
     res.header('Access-Control-Allow-Origin', '*'); // Allow all origins (for development)
-    res.header('Access-Control-Allow-Methods', 'GET, POST, PUT'); // Allowed methods
+    res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE'); // Allowed methods
     res.header('Access-Control-Allow-Headers', 'Content-Type'); // Allowed headers
     next();
   });
@@ -130,10 +130,12 @@ app.put('/prueba/:id', async(req, res) =>{
     }
 
 })
-app.delete('/delete/:id', async(req, res) =>{
+
+app.delete('/deleteCoin/:correo', async(req, res) =>{
     try{
-        const{id} = req.params;
-        const[result] = await pool.query( "DELETE FROM cryptocoin WHERE ID_CryptoCoin = ?", [id])
+        const{correo} = req.params;
+        const{id_coin} = req.query;
+        const[result] = await pool.query( "CALL ElimnarMoneda(?,?)", [correo, id_coin])
         if(result.affectedRows === 0){
             return res.status(404).send("Coin not found")
         }
