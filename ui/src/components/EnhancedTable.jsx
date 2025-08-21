@@ -21,6 +21,7 @@ import {
 } from "@mui/material";
 import DeleteIcon from "@mui/icons-material/Delete";
 import FilterListIcon from "@mui/icons-material/FilterList";
+import {Decimal} from "decimal.js"
 
 // ---------- HEAD CELLS ----------
 const headCells = [
@@ -28,7 +29,7 @@ const headCells = [
   { id: "CURRENCY", numeric: false, disablePadding: false, label: "CURRENCY" },
   { id: "SYMBOL", numeric: false, disablePadding: false, label: "SYMBOL" },
   { id: "AMOUNT_PURCHASED", numeric: true, disablePadding: false, label: "AMOUNT PURCHASED" },
-  { id: "PONDERACIONES", numeric: true, disablePadding: false, label: "PONDERACIONES" },
+  { id: "PONDERACIONES", numeric: true, disablePadding: false, label: "WEIGTH %" },
   { id: "PREVIOUS_QUOTATION", numeric: true, disablePadding: false, label: "PREVIOUS QUOTATION" },
   { id: "TOTAL_INVESTED", numeric: true, disablePadding: false, label: "TOTAL INVESTED" },
   { id: "PORTAFOLIO_CURRENT_VALUE", numeric: true, disablePadding: false, label: "PORTFOLIO CURRENT VALUE" },
@@ -267,16 +268,16 @@ export default function EnhancedTable({reload}) {
                     </TableCell>
                     <TableCell>{row.CURRENCY}</TableCell>
                     <TableCell>{row.SYMBOL}</TableCell>
-                    <TableCell align="right">{row.AMOUNT_PURCHASED}</TableCell>
-                    <TableCell align="right">{row.PONDERACIONES}</TableCell>
-                    <TableCell align="right">{row.PREVIOUS_QUOTATION}</TableCell>
-                    <TableCell align="right">{row.TOTAL_INVESTED}</TableCell>
-                    <TableCell align="right">{row.PORTAFOLIO_CURRENT_VALUE}</TableCell>
-                    <TableCell align="right">{row.PROFIT_LOSS}</TableCell>
-                    <TableCell align="right">{row.ROI}</TableCell>
+                    <TableCell align="right">{new Decimal(row.AMOUNT_PURCHASED).toFixed(2)}</TableCell>
+                    <TableCell align="right">{row.PONDERACIONES.slice(0,6)}</TableCell>
+                    <TableCell align="right">{new Decimal(row.PREVIOUS_QUOTATION).toFixed(2)}</TableCell>
+                    <TableCell align="right">{new Decimal(row.TOTAL_INVESTED).toFixed(2)}</TableCell>
+                    <TableCell align="right">{new Decimal(row.PORTAFOLIO_CURRENT_VALUE).toFixed(2)}</TableCell>
+                    <TableCell align="right">{new Decimal(row.PROFIT_LOSS).toFixed(2)}</TableCell>
+                    <TableCell align="right">{new Decimal(row.ROI).toFixed(2)}</TableCell>
                     <TableCell align="right">{row.CHANGE_24}</TableCell>
-                    <TableCell align="right">{row.CURRENT_PRICE}</TableCell>
-                    <TableCell align="right">{row.DAILY_RETURN}</TableCell>
+                    <TableCell align="right">{new Decimal(row.CURRENT_PRICE).toFixed(2)}</TableCell>
+                    <TableCell align="right">{new Decimal(row.DAILY_RETURN).toFixed(2)}</TableCell>
                   </TableRow>
                 );
               })}
