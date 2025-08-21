@@ -27,7 +27,7 @@ import {Decimal} from "decimal.js"
 const headCells = [
   { id: "NUMERO", numeric: false, disablePadding: true, label: "NUMBER" },
   { id: "CURRENCY", numeric: false, disablePadding: false, label: "CURRENCY" },
-  { id: "SYMBOL", numeric: false, disablePadding: false, label: "SYMBOL" },
+  // { id: "SYMBOL", numeric: false, disablePadding: false, label: "SYMBOL" },
   { id: "AMOUNT_PURCHASED", numeric: true, disablePadding: false, label: "AMOUNT PURCHASED" },
   { id: "PONDERACIONES", numeric: true, disablePadding: false, label: "WEIGTH %" },
   { id: "PREVIOUS_QUOTATION", numeric: true, disablePadding: false, label: "PREVIOUS QUOTATION" },
@@ -267,7 +267,7 @@ export default function EnhancedTable({reload}) {
                       {row.NUMERO}
                     </TableCell>
                     <TableCell>{row.CURRENCY}</TableCell>
-                    <TableCell>{row.SYMBOL}</TableCell>
+                    {/* <TableCell>{row.SYMBOL}</TableCell> */}
                     <TableCell align="right">{new Decimal(row.AMOUNT_PURCHASED).toFixed(2)}</TableCell>
                     <TableCell align="right">{row.PONDERACIONES.slice(0,6)}</TableCell>
                     <TableCell align="right">{new Decimal(row.PREVIOUS_QUOTATION).toFixed(2)}</TableCell>
