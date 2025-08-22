@@ -1,55 +1,63 @@
-// src/components/PortfolioPie.jsx
-import React from "react";
-import Chart from "react-apexcharts";
+import * as React from "react";
 import axios from "axios";
+import PropTypes from "prop-types";
+import { alpha } from "@mui/material/styles";
+import {
+  Box,
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TablePagination,
+  TableRow,
+  TableSortLabel,
+  Toolbar,
+  Typography,
+  Paper,
+  Checkbox,
+  IconButton,
+  Tooltip,
+} from "@mui/material";
+import DeleteIcon from "@mui/icons-material/Delete";
+import FilterListIcon from "@mui/icons-material/FilterList";
+import {Decimal} from "decimal.js"
 
-
-const correo = "rafakitlhdez@gmail.com"; // 🔹 correo fijo para el ejemplo
-let ponderaciones;
-
-// Cargar datos desde tu API
-
-  const fetchData = async () => {
-    try {
-      const res = await axios.get(`http://localhost:3000/portafolio?user=${correo}`);
-      ponderaciones = res.data.map (crypto => parseFloat(crypto.PONDERACIONES.slice(0,-1)));
-    } catch (err) {
-      console.error("Error al cargar portafolio:", err);
-    }
-  };
-  fetchData();
-
-
-function PortfolioPie() {
-  // Ejemplo con varias monedas y porcentajes
-  const series = ponderaciones; // pesos relativos en %
-  const options = {
-    chart: {
-      type: "pie",
-      background: "#f4f7fa",
-      toolbar: { show: true },
+// ---------- CONFIGURAR GRÁFICA ----------
+ const pieData = {
+  labels: rows.map((r) => r.CURRENCY),
+  datasets: [
+    {
+      label: "Ponderación %",
+      data: rows.map((r) => parseFloat(r.PONDERACIONES)),
+      backgroundColor: [
+        "#f94144", "#f3722c", "#f8961e", "#f9844a",
+        "#f9c74f", "#90be6d", "#43aa8b", "#577590",
+        "#277da1", "#8e44ad", "#e67e22", "#2ecc71"
+      ],
     },
-    labels: ["Staked-Ether", "Bitcoin", "USDT"], // nombres de las monedas
-    colors: ["#2a5298", "#ff9800", "#4caf50"],   // un color por moneda
-    title: {
-      text: "Distribución del Portafolio",
-      align: "center",
+  ],
+};
+
+const pieOptions = {
+  responsive: true,
+  plugins: {
+    legend: { position: "right" },
+    tooltip: {
+      callbacks: {
+        label: (ctx) => `${ctx.label}: ${ctx.formattedValue}%`,
+      },
     },
-    legend: { position: "bottom" },
-  };
+  },
+};
 
-  return (
-    <div style={{ 
-      maxWidth: "600px", 
-      margin: "40px auto", 
-      background: "#fff", 
-      borderRadius: "12px", 
-      boxShadow: "0 4px 12px rgba(0,0,0,0.1)", 
-      padding: "20px" 
-    }}>
-      <Chart options={options} series={series} type="pie" height={400} />
-    </div>
-  );
-}
+return (
+  <Box sx={{ width: "100%" }}>
 
-export default PortfolioPie;
+    {/* 📊 GRÁFICA DE PASTEL */}
+    <Box sx={{ width: "50%", margin: "20px auto" }}>
+      <Typography variant="h6" align="center">Distribución del Portafolio</Typography>
+      <Pie data={pieData} options={pieOptions} />
+    </Box>
+  </Box>
+);

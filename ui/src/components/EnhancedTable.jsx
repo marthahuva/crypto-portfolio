@@ -29,7 +29,7 @@ const headCells = [
   { id: "CURRENCY", numeric: false, disablePadding: false, label: "CURRENCY" },
   // { id: "SYMBOL", numeric: false, disablePadding: false, label: "SYMBOL" },
   { id: "AMOUNT_PURCHASED", numeric: true, disablePadding: false, label: "AMOUNT PURCHASED" },
-  { id: "PONDERACIONES", numeric: true, disablePadding: false, label: "WEIGTH %" },
+  { id: "PONDERACIONES", numeric: true, disablePadding: false, label: "WEIGHT %" },
   { id: "PREVIOUS_QUOTATION", numeric: true, disablePadding: false, label: "PREVIOUS QUOTATION" },
   { id: "TOTAL_INVESTED", numeric: true, disablePadding: false, label: "TOTAL INVESTED" },
   { id: "PORTAFOLIO_CURRENT_VALUE", numeric: true, disablePadding: false, label: "PORTFOLIO CURRENT VALUE" },
@@ -169,7 +169,7 @@ export default function EnhancedTable({reload}) {
         const res = await axios.get(`http://localhost:3000/portafolio?user=${correo}`);
         setRows(res.data);
       } catch (err) {
-        console.error("Error al cargar portafolio:", err);
+        console.error("Failed to load portfolio:", err);
       }
     };
     fetchData();
@@ -183,10 +183,10 @@ export default function EnhancedTable({reload}) {
       }
       setRows((prev) => prev.filter((row) => !selectedIds.includes(row.CURRENCY)));
       setSelected([]);
-      alert("Monedas eliminadas correctamente");
+      alert("Coin deleted successfully");
     } catch (err) {
-      console.error("Error al eliminar:", err);
-      alert("Error eliminando monedas");
+      console.error("Failed deleting coin:", err);
+      alert("Failed deleting coin");
     }
   };
 

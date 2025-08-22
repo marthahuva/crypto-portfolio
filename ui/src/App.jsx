@@ -27,7 +27,7 @@ function App() {
       </div>
       <EnhancedTable reload={reload} bananas={"okay"} ></EnhancedTable>
       <AddCoin onCloseReload={forceReload} ></AddCoin>
-      {/* <PortfolioPie/> */}
+      <PortfolioPie/>
       </ThemeProvider>
     </>
   )

@@ -27,7 +27,7 @@ export default function AddCoin( { onCloseReload } ) {
         console.log("Datos recibidos:", res.data); // 🔍 Debug
         setCoins(res.data);
       })
-      .catch((err) => console.error("Error cargando monedas:", err));
+      .catch((err) => console.error("Failed to load coin:", err));
   }, []);
 
   const handleClickOpen = () => setOpen(true);
@@ -43,7 +43,7 @@ export default function AddCoin( { onCloseReload } ) {
   const handleCantidadChange = (e) => {
     const value = e.target.value;
     if (value <= 0) {
-      setError("La cantidad debe ser mayor a 0");
+      setError("Amount must be a positive number");
     } else {
       setError("");
     }
@@ -52,7 +52,7 @@ export default function AddCoin( { onCloseReload } ) {
 
   const handleSubmit = async () => {
     if (!selectedCoin || !cantidad || cantidad <= 0) {
-      setError("Debes seleccionar una moneda y una cantidad válida");
+      setError("You must select a coin and enter a valid amount");
       return;
     }
 
@@ -67,11 +67,11 @@ export default function AddCoin( { onCloseReload } ) {
         payload
       );
 
-      alert("Coin agregada con éxito 🚀");
+      alert("Coin inserted succesfully🚀");
       handleClose();
     } catch (err) {
       console.error(err);
-      alert("Error al agregar coin ❌");
+      alert("Error loading coin ❌");
     }
   };
 
@@ -83,17 +83,17 @@ export default function AddCoin( { onCloseReload } ) {
         </Button>
 
         <Dialog open={open} onClose={handleClose}>
-          <DialogTitle>Agregar nueva coin</DialogTitle>
+          <DialogTitle>Add new coin</DialogTitle>
           <DialogContent>
             <FormControl fullWidth margin="normal">
-              <InputLabel id="coin-select-label">Moneda</InputLabel>
+              <InputLabel id="coin-select-label">Coin</InputLabel>
               <Select
                 labelId="coin-select-label"
                 value={selectedCoin || ""}
                 onChange={(e) => setSelectedCoin(e.target.value)}
               >
                 <MenuItem value="">
-                  <em>Selecciona una moneda</em>
+                  <em>Select a coin</em>
                 </MenuItem>
                 {coins.map((coin, index) => (
                   <MenuItem
@@ -108,7 +108,7 @@ export default function AddCoin( { onCloseReload } ) {
 
             <TextField
               margin="normal"
-              label="Cantidad a comprar"
+              label="Amount to insert"
               type="number"
               fullWidth
               value={cantidad || ""}
@@ -118,12 +118,12 @@ export default function AddCoin( { onCloseReload } ) {
             />
           </DialogContent>
           <DialogActions>
-            <Button onClick={handleClose}>Cancelar</Button>
+            <Button onClick={handleClose}>Cancel</Button>
             <Button
               onClick={handleSubmit}
               disabled={!selectedCoin || !cantidad || cantidad <= 0}
             >
-              Agregar
+              Add
             </Button>
           </DialogActions>
         </Dialog>
