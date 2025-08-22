@@ -7,7 +7,7 @@ import EnhancedTable from './components/EnhancedTable.jsx'
 import AddCoin from './components/AddCoin.jsx'
 import theme from './theme/theme.js';
 import Navbar from './components/Navbar';
-import PortfolioPie from './components/PortfolioPie.jsx';
+// import PortfolioPie from './components/PortfolioPie.jsx';
 // import Dashboard from './components/Dashboard';
 
 function App() {
@@ -27,7 +27,7 @@ function App() {
       </div>
       <EnhancedTable reload={reload} bananas={"okay"} ></EnhancedTable>
       <AddCoin onCloseReload={forceReload} ></AddCoin>
-      <PortfolioPie/>
+      {/* <PortfolioPie/> */}
       </ThemeProvider>
     </>
   )
