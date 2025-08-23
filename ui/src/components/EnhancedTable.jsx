@@ -274,7 +274,7 @@ export default function EnhancedTable({reload}) {
                     <TableCell align="right">{new Decimal(row.TOTAL_INVESTED).toFixed(2)}</TableCell>
                     <TableCell align="right">{new Decimal(row.PORTAFOLIO_CURRENT_VALUE).toFixed(2)}</TableCell>
                     <TableCell align="right">{new Decimal(row.PROFIT_LOSS).toFixed(2)}</TableCell>
-                    <TableCell align="right">{new Decimal(row.ROI).toFixed(2)}</TableCell>
+                    <TableCell align="right">{new Decimal(row.ROI).toFixed(5)}</TableCell>
                     <TableCell align="right">{row.CHANGE_24}</TableCell>
                     <TableCell align="right">{new Decimal(row.CURRENT_PRICE).toFixed(2)}</TableCell>
                     <TableCell align="right">{new Decimal(row.DAILY_RETURN).toFixed(2)}</TableCell>

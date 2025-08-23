@@ -1,63 +1,76 @@
-import * as React from "react";
-import axios from "axios";
-import PropTypes from "prop-types";
-import { alpha } from "@mui/material/styles";
+import React from "react";
+import { Pie } from "react-chartjs-2";
 import {
-  Box,
-  Table,
-  TableBody,
-  TableCell,
-  TableContainer,
-  TableHead,
-  TablePagination,
-  TableRow,
-  TableSortLabel,
-  Toolbar,
-  Typography,
-  Paper,
-  Checkbox,
-  IconButton,
-  Tooltip,
-} from "@mui/material";
-import DeleteIcon from "@mui/icons-material/Delete";
-import FilterListIcon from "@mui/icons-material/FilterList";
+  Chart as ChartJS,
+  Title,
+  Tooltip as ChartTooltip,
+  Legend,
+  ArcElement,
+} from "chart.js";
+import ChartDataLabels from "chartjs-plugin-datalabels";
+import { Card, CardContent, Typography } from "@mui/material";
 import {Decimal} from "decimal.js"
 
-// ---------- CONFIGURAR GRÁFICA ----------
- const pieData = {
-  labels: rows.map((r) => r.CURRENCY),
-  datasets: [
-    {
-      label: "Ponderación %",
-      data: rows.map((r) => parseFloat(r.PONDERACIONES)),
-      backgroundColor: [
-        "#f94144", "#f3722c", "#f8961e", "#f9844a",
-        "#f9c74f", "#90be6d", "#43aa8b", "#577590",
-        "#277da1", "#8e44ad", "#e67e22", "#2ecc71"
-      ],
-    },
-  ],
-};
+ChartJS.register(Title, ChartTooltip, Legend, ArcElement, ChartDataLabels);
 
-const pieOptions = {
-  responsive: true,
-  plugins: {
-    legend: { position: "right" },
-    tooltip: {
-      callbacks: {
-        label: (ctx) => `${ctx.label}: ${ctx.formattedValue}%`,
+export default function PortfolioPie({ rows }) {
+  if (!rows || rows.length === 0) {
+    return (
+      <Card sx={{ mt: 4, p: 2 }}>
+        <Typography variant="h6" align="center">
+          No hay datos en el portafolio aún 📉
+        </Typography>
+      </Card>
+    );
+  }
+
+  const pieData = {
+    labels: rows.map((r) => r.CURRENCY),
+    datasets: [
+      {
+        label: "Ponderación %",
+        data: rows.map((r) => parseFloat(r.PONDERACIONES.slice(0,6))),
+        backgroundColor: [
+          "#2e7d32", // verde fuerte
+          "#c8e6c9",
+          "#e0e0e0", // gris claro
+          "#bdbdbd",
+          "#9e9e9e",
+          "#757575",
+          "#424242"  // gris oscuro
+        ],
+      },
+    ],
+  };
+
+  const pieOptions = {
+    responsive: true,
+    plugins: {
+      legend: { position: "right" },
+      tooltip: {
+        callbacks: {
+          label: (ctx) => `${ctx.label}: ${ctx.formattedValue}%`,
+        },
+      },
+      datalabels: {
+        color: "#fff",
+        formatter: (value) => `${value}%`,
+        font: {
+          weight: "bold",
+          size: 12,
+        },
       },
     },
-  },
-};
+  };
 
-return (
-  <Box sx={{ width: "100%" }}>
-
-    {/* 📊 GRÁFICA DE PASTEL */}
-    <Box sx={{ width: "50%", margin: "20px auto" }}>
-      <Typography variant="h6" align="center">Distribución del Portafolio</Typography>
-      <Pie data={pieData} options={pieOptions} />
-    </Box>
-  </Box>
-);
+  return (
+    <Card sx={{ mt: 4, p: 2 }}>
+      <CardContent>
+        <Typography variant="h6" gutterBottom>
+          Portfololio current value
+        </Typography>
+        <Pie data={pieData} options={pieOptions} />
+      </CardContent>
+    </Card>
+  );
+}
